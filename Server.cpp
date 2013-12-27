@@ -26,7 +26,7 @@ public:
 	{
 		server_.setConnetionCallback(boost::bind(&EchoServer::onConnection, this, _1));
 		server_.setMessageCallback(boost::bind(&EchoServer::messageCb, this, _1, _2));
-		server_.setThreadNum(1);
+		server_.setThreadNum(0);
 	}
 
 	void start()
@@ -36,12 +36,14 @@ public:
 
 	void onConnection(const TcpConnectionPtr& conn)
 	{
+		conn->send("hello");
 		printf(" %s %s\n", __FILE__, __FUNCTION__);
 	}
 
 	void messageCb(const TcpConnectionPtr& conn, Buffer* buf)
 	{
 		std::string msg(buf->retrieveAllToString());
+		std::cout << "msg  " << msg <<std::endl;
 	}
 
 private:
