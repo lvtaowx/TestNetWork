@@ -36,7 +36,8 @@ public:
 
 	void onConnection(const TcpConnectionPtr& conn)
 	{
-		conn->send("hello");
+		char* buf = "this is server service hello world";
+		conn->send(buf);
 		printf(" %s %s\n", __FILE__, __FUNCTION__);
 	}
 
@@ -44,6 +45,8 @@ public:
 	{
 		std::string msg(buf->retrieveAllToString());
 		std::cout << "msg  " << msg <<std::endl;
+
+		conn->send(msg.c_str());
 	}
 
 private:
